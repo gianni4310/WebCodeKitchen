@@ -8,12 +8,56 @@
 <h1 id="test"></h1>
 <a id="index"></a>
 
+<div>
+    <label for="n1"></label><input type="number" id="n1">
+    <a> +</a>
+    <label for="n2"></label><input type="number" id="n2">
+
+    <a> = </a>
+    <a id="res1"> </a>
+</div>
+
+<div>
+    <label for="n3"></label><input type="number" id="n3">
+    <a> +</a>
+    <label for="n4"></label><input type="number" id="n4">
+
+    <a> = </a>
+    <a id="res2"> </a>
+</div>
+</div>
+
+<button id="add"> Add</button>
+
 <script>
     const text = "Welcome to my Page";
     const name = "Gianni";
 
     const fst = x => y => x;
     const snd = x => y => y;
+
+    const add = x => y => x + y;
+
+    document.getElementById("add").onclick = () => {
+        const n1 = document.getElementById("n1").value;
+        const n2 = document.getElementById("n2").value;
+
+        const n3 = parseFloat(document.getElementById("n3").value);
+        const n4 = parseFloat(document.getElementById("n4").value);
+
+
+
+        const res1 = add(n1)(n2);
+
+        const res2 = add(n3)(n3);
+
+
+
+        document.getElementById("res1").textContent = res1;
+
+        document.getElementById("res2").textContent = res2;
+
+    }
 
     document.getElementById("test").textContent = fst(text)();
 
