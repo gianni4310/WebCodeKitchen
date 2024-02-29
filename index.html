@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome Page</title>
+</head>
+<body>
+<h1 id="test"></h1>
+<a id="index"></a>
+
+<script>
+    const text = "Welcome to my Page";
+    const name = "Gianni";
+
+    const fst = x => y => x;
+    const snd = x => y => y;
+
+    document.getElementById("test").textContent = fst(text)();
+
+    function changeColor() {
+        const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6'];
+        const colorIndex = Math.floor(Math.random() * colors.length);
+        document.getElementById("test").style.color = colors[colorIndex];
+
+        document.getElementById("index").textContent = "Index number: " + colorIndex.toString();
+    }
+
+    setInterval(changeColor, 2000);
+</script>
+
+</body>
+</html>
