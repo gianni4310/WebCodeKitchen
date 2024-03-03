@@ -3,34 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome Page</title>
+    <link rel="stylesheet" href="page.css">
+
 </head>
 <body>
-<h1 id="test"></h1>
+<h1 id="test" class="titleColor"></h1>
 <a id="index"></a>
 
-<div>
-    <label for="n1"></label><input type="number" id="n1">
-    <a> +</a>
-    <label for="n2"></label><input type="number" id="n2">
-
-    <a> = </a>
-    <a id="res1"> </a>
-</div>
-<div>
-
-    <label for="n3"></label><input type="number" id="n3">
-    <a> +</a>
-    <label for="n4"></label><input type="number" id="n4">
-
-    <a> = </a>
-    <a id="res2"> </a>
-
-
-</div>
 
 <div>
-    <button id="add">
-        add
+    <button id="move">
+        move
     </button>
 </div>
 
@@ -47,37 +30,25 @@
     const ctx = canvas.getContext("2d");
 
     const fst = x => y => x;
-    const snd = x => y => y;
 
-    const add = x => y => x + y;
+    let x = 100;
+    let y = 50;
 
-    document.getElementById("add").onclick = () => {
-        const n1 = document.getElementById("n1").value;
-        const n2 = document.getElementById("n2").value;
-
-        const n3 = parseFloat(document.getElementById("n3").value);
-        const n4 = parseFloat(document.getElementById("n4").value);
-
-
-        const res1 = add(n1)(n2);
-
-        const res2 = add(n3)(n3);
-        ctx.fillStyle = "#3498db";
-        ctx.fillRect(n1,n2,20,20);
+    function drawBall() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "blue";
+        ctx.beginPath();
+        ctx.arc(x, y, 15, 0, 2 * Math.PI);
         ctx.fill();
-
-        for (let i = 0; i < 10; i++) {
-            ctx.fillStyle = "#3498db";
-            ctx.fillRect(20*i,20*i,20,20);
-            ctx.fill();
-        }
-
-
-        document.getElementById("res1").textContent = res1;
-
-        document.getElementById("res2").textContent = res2;
-
     }
+
+    drawBall();
+
+    document.getElementById("move").onclick = () => {
+        x += 20;
+        drawBall();
+    };
+
 
     document.getElementById("test").textContent = fst(text)();
 
