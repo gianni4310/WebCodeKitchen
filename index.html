@@ -7,12 +7,12 @@
 
 </head>
 <body>
-<h1 id="test" class="titleColor"></h1>
+<h1 class="titleColor">Welcome to my page</h1>
 <a id="index"></a>
 
 
 <div>
-    <button id="move">
+    <button id="fall">
         move
     </button>
 </div>
@@ -24,43 +24,54 @@
 
 <script>
     const text = "Welcome to my Page";
-    const name = "Gianni";
 
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
 
     const fst = x => y => x;
 
-    let x = 100;
-    let y = 50;
+
+    let x = canvas.width / 2;
+    let y = 0;
+
+    let vy = 0;
+    const gravity = 0.5;
+    const bounce = 0.7;
+    const radius = 15;
 
     function drawBall() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "blue";
         ctx.beginPath();
-        ctx.arc(x, y, 15, 0, 2 * Math.PI);
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
         ctx.fill();
+        ctx.closePath();
     }
 
-    drawBall();
+    function update() {
+        vy += gravity;
+        y += vy;
 
-    document.getElementById("move").onclick = () => {
-        x += 20;
+
+        if (y + radius > canvas.height) {
+            y = canvas.height - radius;
+            vy *= -bounce;
+        }
+
         drawBall();
-    };
+    }
 
+    document.getElementById("fall").onclick = () => {
+        setInterval(update, 20);
+    }
 
-    document.getElementById("test").textContent = fst(text)();
 
     function changeColor() {
         const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6'];
         const colorIndex = Math.floor(Math.random() * colors.length);
-        document.getElementById("test").style.color = colors[colorIndex];
-
-        document.getElementById("index").textContent = "Index number: " + colorIndex.toString();
+        ctx.fillStyle = colors[colorIndex]
     }
 
-    setInterval(changeColor, 2000);
+    setInterval(changeColor, 200);
 </script>
 
 </body>
