@@ -28,23 +28,20 @@
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
 
-    const fst = x => y => x;
-
-
     let x = canvas.width / 2;
-    let y = 0;
+    let y = canvas.height / 2;
 
     let vy = 0;
     const gravity = 0.5;
     const bounce = 0.7;
-    const radius = 15;
+    const radius = 10;
 
     const h = 50;
     const b = 10;
     const f = (canvas.height / 2) - (h / 2);
 
     const x1 = 10;
-    const x2 = 380;
+    const x2 = canvas.width - 20;
 
     let fy1 = f;
     let fy2 = f;
@@ -52,8 +49,10 @@
     ctx.fillRect(x1,f,b,h);
     ctx.fillRect(x2,f,b,h);
 
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fill();
+
     function drawBlocks() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillRect(x1, fy1, b, h);
         ctx.fillRect(x2, fy2, b, h);
     }
@@ -87,7 +86,8 @@
         }
     });
     function drawBall() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(40,40,40,40);
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, Math.PI * 2);
         ctx.fill();
@@ -95,21 +95,11 @@
     }
 
     function update() {
-        vy += gravity;
-        y += vy;
-
-
-        if (y + radius > canvas.height) {
-            y = canvas.height - radius;
-            vy *= -bounce;
-        }
-
+        drawBlocks();
         drawBall();
     }
 
-    document.getElementById("fall").onclick = () => {
-        setInterval(update, 20);
-    }
+    setInterval(update,2000);
 
 
     function changeColor() {
