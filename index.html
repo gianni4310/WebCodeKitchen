@@ -58,9 +58,23 @@
         drawBall();
         drawLeftPaddle();
         drawRightPaddle();
+        collisionDetection();
+
+        x += 2;
+        y += 0;
     }
 
-    setInterval(update, 1);
+    function collisionDetection() {
+        if(x < radius + paddleWidth && y > leftPaddleY && y < leftPaddleY + paddleHeight ||
+            x  > canvas.width - radius - paddleWidth && y > rightPaddleY && y < rightPaddleY + paddleHeight) {
+            x = -x;
+        }
+
+    }
+
+
+
+    setInterval(update, 20);
 
     document.addEventListener('keydown', (e) => {
         const paddleSpeed = 20;
