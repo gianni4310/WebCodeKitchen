@@ -23,6 +23,8 @@
     let x = canvas.width / 2;
     let y = canvas.height / 2;
     const radius = 10;
+    let dx = 2;
+    let dy = 1;
 
     const paddleHeight = 100;
     const paddleWidth = 10;
@@ -60,21 +62,32 @@
         drawRightPaddle();
         collisionDetection();
 
-        x += 2;
-        y += 0;
+        x += dx;
+        y += dy;
     }
 
     function collisionDetection() {
-        if(x < radius + paddleWidth && y > leftPaddleY && y < leftPaddleY + paddleHeight ||
-            x  > canvas.width - radius - paddleWidth && y > rightPaddleY && y < rightPaddleY + paddleHeight) {
-            x = -x;
+        if(x + dx < radius + paddleWidth && y > leftPaddleY && y < leftPaddleY + paddleHeight ||
+            x + dx > canvas.width - radius - paddleWidth && y > rightPaddleY && y < rightPaddleY + paddleHeight) {
+            dx = -dx;
         }
+
+        if(x + dx < radius || x + dx > canvas.width - radius) {
+            x = canvas.width / 2;
+            y = canvas.height / 2;
+            dx = -dx;
+        }
+
+        if(y + dy < radius || y + dy > canvas.height - radius) {
+            dy = -dy;
+        }
+
 
     }
 
 
 
-    setInterval(update, 20);
+    setInterval(update, 10);
 
     document.addEventListener('keydown', (e) => {
         const paddleSpeed = 20;
