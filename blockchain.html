@@ -3,6 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <title>Blockchain</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: beige;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: forestgreen;
+        }
+
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid darkgrey;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: forestgreen;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+
+        #blockContainer {
+            width: 300px;
+            margin: 20px 0;
+        }
+
+        .block {
+            background-color: #fff;
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px 0;
+            justify-content: end;
+            word-wrap: break-word;
+        }
+
+        .block.hash {
+            background-color: orange;
+        }
+
+        .block h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .block p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        #validationResult {
+            font-size: 18px;
+            font-weight: bold;
+            color: #dc3545;
+        }
+    </style>
 </head>
 <body>
 
@@ -15,30 +84,8 @@
 <div id="blockContainer"></div>
 <div id="validationResult"></div>
 
-<div>
-
-    <div>
-        test
-    </div>
-
-    <div id="test">
-        <button id="testValidation">Validate test</button>
-    </div>
-</div>
-
 <script>
     const chain = [];
-
-    const valueChain = [];
-
-
-    function validateTest() {
-        const values = ["Hallo", "World", "!"];
-
-
-
-    }
-
 
     async function sha256(message) {
         const msgBuffer = new TextEncoder().encode(message);
@@ -76,7 +123,13 @@
 
         chain.forEach((block, index) => {
             const blockElement = document.createElement("div");
-            blockElement.textContent = `Block ${index + 1}: ${block.hash}`;
+            blockElement.classList.add("block");
+            blockElement.innerHTML = `
+                <h3>Block ${index + 1}</h3>
+                <p><strong>Data:</strong> ${block.data}</p>
+                <p ><strong>Last Hash:</strong> ${block.lastHash}</p>
+                <p><strong>Hash:</strong> ${block.hash}</p>
+            `;
             blockContainer.appendChild(blockElement);
         });
     }
