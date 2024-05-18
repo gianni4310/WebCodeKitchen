@@ -15,8 +15,30 @@
 <div id="blockContainer"></div>
 <div id="validationResult"></div>
 
+<div>
+
+    <div>
+        test
+    </div>
+
+    <div id="test">
+        <button id="testValidation">Validate test</button>
+    </div>
+</div>
+
 <script>
     const chain = [];
+
+    const valueChain = [];
+
+
+    function validateTest() {
+        const values = ["Hallo", "World", "!"];
+
+
+
+    }
+
 
     async function sha256(message) {
         const msgBuffer = new TextEncoder().encode(message);
@@ -61,29 +83,27 @@
 
     async function validateChain() {
 
-
         let i = chain.length - 1;
 
         while (i > 0) {
-            let currentBlock = chain[i - 1]
-        }
-
-        for (let i = chain.length; i > 0; i--) {
-            const currentBlock = chain[i - 1];
-            const previousBlock = chain[currentBlock - 1];
-
+            let currentBlock = chain[i]
+            let previousBlock = chain[i - 1]
 
             if (previousBlock.hash !== currentBlock.lastHash) {
                 document.getElementById("validationResult").textContent = 'Blockchain is invalid!';
                 return false;
             }
+
+            i--;
         }
+
         document.getElementById("validationResult").textContent = 'Blockchain is valid!';
         return true;
     }
 
     document.getElementById("addBlock").addEventListener("click", addBlock);
     document.getElementById("validateChain").addEventListener("click", validateChain);
+    document.getElementById("testValidation").addEventListener("click", validateTest);
 </script>
 </body>
 </html>
