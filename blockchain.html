@@ -10,10 +10,10 @@
 <input type="text" id="dataInput" placeholder="Enter data for block"/>
 
 <button id="addBlock">Add Block</button>
+<button id="validateChain">Validate Blockchain</button>
 
-<div id="blockContainer">
-
-</div>
+<div id="blockContainer"></div>
+<div id="validationResult"></div>
 
 <script>
     const chain = [];
@@ -26,12 +26,19 @@
         return hashHex;
     }
 
+    function getLastHash() {
+        return chain.length > 0 ? chain[chain.length - 1].hash : '';
+    }
+
     async function addBlock() {
         const data = document.getElementById("dataInput").value;
-        const hash = await sha256(data);
+        const lastHash = getLastHash();
+        const hash = await sha256(Date.now() + lastHash + data);
 
         const block = {
             data: data,
+            timestamp: Date.now(),
+            lastHash: lastHash,
             hash: hash
         };
 
@@ -52,7 +59,31 @@
         });
     }
 
+    async function validateChain() {
+
+
+        let i = chain.length - 1;
+
+        while (i > 0) {
+            let currentBlock = chain[i - 1]
+        }
+
+        for (let i = chain.length; i > 0; i--) {
+            const currentBlock = chain[i - 1];
+            const previousBlock = chain[currentBlock - 1];
+
+
+            if (previousBlock.hash !== currentBlock.lastHash) {
+                document.getElementById("validationResult").textContent = 'Blockchain is invalid!';
+                return false;
+            }
+        }
+        document.getElementById("validationResult").textContent = 'Blockchain is valid!';
+        return true;
+    }
+
     document.getElementById("addBlock").addEventListener("click", addBlock);
+    document.getElementById("validateChain").addEventListener("click", validateChain);
 </script>
 </body>
 </html>
