@@ -37,9 +37,13 @@
         }
 
         .blockContainer {
-            display: grid;
+            display: flex;
             flex-direction: column;
             align-items: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .container {
@@ -49,7 +53,7 @@
         }
 
 
-        #blockContainer {
+        #blockContainer, #testBlockContainer {
             width: 300px;
             margin: 20px 0;
         }
@@ -91,22 +95,30 @@
 
 <div class="container">
 <div class="blockContainer">
-    <input type="text" id="dataInput" placeholder="Enter data for block"/>
 
-    <button id="addBlock">Add Block</button>
-    <button id="validateChain">Validate Blockchain</button>
+    <div class="blockContainer">
+        <input type="text" id="dataInput" placeholder="Enter data for block"/>
 
-    <div id="hallo"></div>
-    <div id="validationResult"></div>
+        <button id="addBlock">Add Block</button>
+        <button id="validateChain">Validate</button>
+
+        <div id="blockContainer"></div>
+        <div id="validationResult"></div>
+    </div>
+
 
 </div>
 
 <div class="blockContainer">
+    <div class="blockContainer">
     <input type="text" id="testInput" placeholder="Enter data for block"/>
 
     <button id="testBlock">Add Block</button>
+    </div>
 
     <div id="testBlockContainer"></div>
+
+
 
 </div>
 </div>
@@ -135,7 +147,7 @@
         if (flag === "add") {
             chainId = chain;
             dataId = "dataInput"
-            containerId = "hallo"
+            containerId = "blockContainer"
         } else if (flag === "test") {
             chainId = testChain;
             dataId = "testInput"
@@ -143,8 +155,10 @@
         }
 
         const data = document.getElementById(dataId).value;
-        const lastHash = getLastHash(chain);
+        const lastHash = getLastHash(chainId);
         const hash = await sha256(Date.now() + lastHash + data);
+
+        console.log("heei",chainId)
 
         const block = {
             data: data,
@@ -153,18 +167,21 @@
             hash: hash
         };
 
+
         chainId.push(block);
 
-        console.log("hei2", chain)
+        console.log("aaaaaa", chainId)
 
-        displayChain(chain, containerId);
+        console.log("hei2", containerId)
+
+        displayChain(chainId, containerId);
 
         document.getElementById(dataId).value = '';
     }
 
-    function displayChain(containerId, dataId, chain) {
+    function displayChain(chain, containerId) {
         const blockContainer = document.getElementById(containerId);
-        console.log("error", blockContainer)
+        console.log("error", containerId)
         blockContainer.innerHTML = '';
 
         chain.forEach((block, index) => {
