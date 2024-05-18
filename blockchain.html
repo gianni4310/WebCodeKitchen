@@ -36,6 +36,18 @@
             font-size: 16px;
         }
 
+        .blockContainer {
+            display: grid;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+
 
         #blockContainer {
             width: 300px;
@@ -76,33 +88,62 @@
 <body>
 
 <h1>Blockchain</h1>
-<input type="text" id="dataInput" placeholder="Enter data for block"/>
 
-<button id="addBlock">Add Block</button>
-<button id="validateChain">Validate Blockchain</button>
+<div class="container">
+<div class="blockContainer">
+    <input type="text" id="dataInput" placeholder="Enter data for block"/>
 
-<div id="blockContainer"></div>
-<div id="validationResult"></div>
+    <button id="addBlock">Add Block</button>
+    <button id="validateChain">Validate Blockchain</button>
+
+    <div id="blockContainer"></div>
+    <div id="validationResult"></div>
+
+</div>
+
+<div class="blockContainer">
+    <input type="text" id="testInput" placeholder="Enter data for block"/>
+
+    <button id="testBlock">Add Block</button>
+
+    <div id="testBlockContainer"></div>
+
+</div>
+</div>
 
 <script>
     const chain = [];
+    const testChain = [];
 
-    async function sha256(message) {
+     function sha256(message) {
         const msgBuffer = new TextEncoder().encode(message);
-        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashBuffer =  crypto.subtle.digest('SHA-256', msgBuffer);
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         return hashHex;
     }
 
-    function getLastHash() {
+    function getLastHash(chain) {
         return chain.length > 0 ? chain[chain.length - 1].hash : '';
     }
 
-    async function addBlock() {
-        const data = document.getElementById("dataInput").value;
-        const lastHash = getLastHash();
-        const hash = await sha256(Date.now() + lastHash + data);
+    function addBlock(flag) {
+        let chain, dataId, containerId;
+
+        if (flag === "add") {
+            chain = window.chain;
+            dataId = "dataInput"
+            containerId = "blockContainer"
+
+        } else if (flag === "test"){
+            chain = window.testChain;
+            dataId = "testInput"
+            containerId = "testBlockContainer";
+        }
+
+        const data = document.getElementById(dataId).value;
+        const lastHash = getLastHash(chain);
+        const hash =  sha256(Date.now() + lastHash + data);
 
         const block = {
             data: data,
@@ -112,13 +153,14 @@
         };
 
         chain.push(block);
-        displayChain();
 
-        document.getElementById("dataInput").value = '';
+        displayChain(chain, dataId, containerId);
+
+        document.getElementById(dataId).value = '';
     }
 
-    function displayChain() {
-        const blockContainer = document.getElementById("blockContainer");
+    function displayChain(containerId, dataId, chain) {
+        const blockContainer = document.getElementById(containerId);
         blockContainer.innerHTML = '';
 
         chain.forEach((block, index) => {
@@ -134,7 +176,7 @@
         });
     }
 
-    async function validateChain() {
+     function validateChain() {
 
         let i = chain.length - 1;
 
@@ -154,9 +196,10 @@
         return true;
     }
 
-    document.getElementById("addBlock").addEventListener("click", addBlock);
+    document.getElementById("addBlock").addEventListener("click", addBlock("add"));
+    document.getElementById("testBlock").addEventListener("click", addBlock("test"));
     document.getElementById("validateChain").addEventListener("click", validateChain);
-    document.getElementById("testValidation").addEventListener("click", validateTest);
+
 </script>
 </body>
 </html>
