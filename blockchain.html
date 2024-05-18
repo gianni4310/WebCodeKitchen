@@ -8,8 +8,37 @@
 
 <h1>Blockchain</h1>
 <input type="text" id="dataInput" placeholder="Enter data for block"/>
-<button onclick="addBlock()">Add Block</button>
 
-<script src="blockchain.js"></script>
+<button id="addBlock">Add Block</button>
+
+<div id="block">
+    Block:
+</div>
+
+<script>
+
+    async function sha256(message) {
+        const msgBuffer = new TextEncoder().encode(message);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        return hashHex;
+    }
+
+
+
+    async function addBlock() {
+        const data = document.getElementById("dataInput").value;
+
+        const hash = await sha256(data);
+        document.getElementById("block").textContent = hash;
+
+    }
+
+    document.getElementById("addBlock").addEventListener("click", addBlock)
+
+
+
+</script>
 </body>
 </html>
