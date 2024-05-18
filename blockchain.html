@@ -11,11 +11,12 @@
 
 <button id="addBlock">Add Block</button>
 
-<div id="block">
-    Block:
+<div id="blockContainer">
+
 </div>
 
 <script>
+    const chain = [];
 
     async function sha256(message) {
         const msgBuffer = new TextEncoder().encode(message);
@@ -25,20 +26,33 @@
         return hashHex;
     }
 
-
-
     async function addBlock() {
         const data = document.getElementById("dataInput").value;
-
         const hash = await sha256(data);
-        document.getElementById("block").textContent = hash;
 
+        const block = {
+            data: data,
+            hash: hash
+        };
+
+        chain.push(block);
+        displayChain();
+
+        document.getElementById("dataInput").value = '';
     }
 
-    document.getElementById("addBlock").addEventListener("click", addBlock)
+    function displayChain() {
+        const blockContainer = document.getElementById("blockContainer");
+        blockContainer.innerHTML = '';
 
+        chain.forEach((block, index) => {
+            const blockElement = document.createElement("div");
+            blockElement.textContent = `Block ${index + 1}: ${block.hash}`;
+            blockContainer.appendChild(blockElement);
+        });
+    }
 
-
+    document.getElementById("addBlock").addEventListener("click", addBlock);
 </script>
 </body>
 </html>
