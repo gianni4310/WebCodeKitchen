@@ -1,17 +1,12 @@
 
 
-
-class Block {
-
-    constructor(time = Date.now(), data = {}) {
-        this.time = time;
-        this.data = data;
-        this.lastHah = '';
+const Block = (data = {}, lastHash = '') => {
+    return {
+        time: Date.now(),
+        data: data,
+        lastHash: lastHash,
+        createHash: function() {
+            return sha256(this.time + this.lastHash + JSON.stringify(this.data));
+        }
     }
-
-    createHash() {
-        return sha256(this.time + this.lastHah + this.data);
-    }
-
-
 }

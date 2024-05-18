@@ -1,19 +1,12 @@
 
+const Blockchain = () => {
 
+    const chain = []
 
-class Blockchain {
-    constructor() {
-        this.chain = [];
+    function addBlock(block) {
+
+        const lastBlock = chain[chain.length -1];
+        const newBlock = Block(data, lastBlock.createHash());
+        chain.push(newBlock);
     }
-
-    addBlock(block) {
-        block.lastHash = this.getLastBlock.createHash();
-        this.chain.push(Object.freeze(block));
-    }
-
-
-    getLastBlock() {
-        return this.chain[this.chain.length - 1];
-    }
-
 }
