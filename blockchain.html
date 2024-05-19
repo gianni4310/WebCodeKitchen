@@ -84,11 +84,29 @@
         .square {
             width: 20px;
             height: 20px;
-            background-color: blue;
+            background-color: green;
             position: absolute;
-            top: 20px;
+            top: 70px;
             left: -30px;
             border-radius: 5px;
+        }
+
+        .lineH {
+            height: 180px;
+            width: 3px;
+            position: absolute;
+            top: -100px;
+            left: -20px;
+            background-color: green;
+        }
+
+        .lineV {
+            height: 3px;
+            width: 10px;
+            position: absolute;
+            top: -100px;
+            left: -20px;
+            background-color: green;
         }
 
         .arrow {
@@ -96,10 +114,10 @@
             height: 0;
             border-top: 10px solid transparent;
             border-bottom: 10px solid transparent;
-            border-left: 10px solid blue;
+            border-left: 10px solid green;
             position: absolute;
-            top: 25px;
-            left: -50px;
+            top: -110px;
+            left: -10px;
         }
 
         #validationResult {
@@ -194,10 +212,18 @@
                 const square = document.createElement("div");
                 square.classList.add("square");
 
+                const lineV = document.createElement("div");
+                lineV.classList.add("lineV")
+
+                const lineH = document.createElement("div");
+                lineH.classList.add("lineH")
+
                 const arrow = document.createElement("div");
                 arrow.classList.add("arrow");
 
                 blockElement.appendChild(square);
+                blockElement.appendChild(lineV);
+                blockElement.appendChild(lineH);
                 blockElement.appendChild(arrow);
             }
 
