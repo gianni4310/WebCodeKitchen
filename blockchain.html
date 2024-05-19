@@ -52,7 +52,6 @@
             width: 100%;
         }
 
-
         #blockContainer, #testBlockContainer {
             width: 300px;
             margin: 20px 0;
@@ -64,8 +63,8 @@
             border-radius: 10px;
             padding: 20px;
             margin: 10px 0;
-            justify-content: end;
             word-wrap: break-word;
+            position: relative;
         }
 
         .block.hash {
@@ -82,6 +81,27 @@
             color: #666;
         }
 
+        .square {
+            width: 20px;
+            height: 20px;
+            background-color: blue;
+            position: absolute;
+            top: 20px;
+            left: -30px;
+            border-radius: 5px;
+        }
+
+        .arrow {
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid blue;
+            position: absolute;
+            top: 25px;
+            left: -50px;
+        }
+
         #validationResult {
             font-size: 18px;
             font-weight: bold;
@@ -94,33 +114,19 @@
 <h1>Blockchain</h1>
 
 <div class="container">
-<div class="blockContainer">
-
     <div class="blockContainer">
         <input type="text" id="dataInput" placeholder="Enter data for block"/>
-
         <button id="addBlock">Add Block</button>
         <button id="validateChain">Validate</button>
-
         <div id="blockContainer"></div>
         <div id="validationResult"></div>
     </div>
 
-
-</div>
-
-<div class="blockContainer">
     <div class="blockContainer">
-    <input type="text" id="testInput" placeholder="Enter data for block"/>
-
-    <button id="testBlock">Add Block</button>
+        <input type="text" id="testInput" placeholder="Enter data for block"/>
+        <button id="testBlock">Add Block</button>
+        <div id="testBlockContainer"></div>
     </div>
-
-    <div id="testBlockContainer"></div>
-
-
-
-</div>
 </div>
 
 <script>
@@ -142,23 +148,19 @@
     async function addBlock(flag) {
         let chainId, dataId, containerId;
 
-        console.log(flag)
-
         if (flag === "add") {
             chainId = chain;
-            dataId = "dataInput"
-            containerId = "blockContainer"
+            dataId = "dataInput";
+            containerId = "blockContainer";
         } else if (flag === "test") {
             chainId = testChain;
-            dataId = "testInput"
+            dataId = "testInput";
             containerId = "testBlockContainer";
         }
 
         const data = document.getElementById(dataId).value;
         const lastHash = getLastHash(chainId);
         const hash = await sha256(Date.now() + lastHash + data);
-
-        console.log("heei",chainId)
 
         const block = {
             data: data,
@@ -167,12 +169,7 @@
             hash: hash
         };
 
-
         chainId.push(block);
-
-        console.log("aaaaaa", chainId)
-
-        console.log("hei2", containerId)
 
         displayChain(chainId, containerId);
 
@@ -181,7 +178,6 @@
 
     function displayChain(chain, containerId) {
         const blockContainer = document.getElementById(containerId);
-        console.log("error", containerId)
         blockContainer.innerHTML = '';
 
         chain.forEach((block, index) => {
@@ -190,20 +186,31 @@
             blockElement.innerHTML = `
                 <h3>Block ${index + 1}</h3>
                 <p><strong>Data:</strong> ${block.data}</p>
-                <p ><strong>Last Hash:</strong> ${block.lastHash}</p>
+                <p><strong>Last Hash:</strong> ${block.lastHash}</p>
                 <p><strong>Hash:</strong> ${block.hash}</p>
             `;
+
+            if (index > 0) {
+                const square = document.createElement("div");
+                square.classList.add("square");
+
+                const arrow = document.createElement("div");
+                arrow.classList.add("arrow");
+
+                blockElement.appendChild(square);
+                blockElement.appendChild(arrow);
+            }
+
             blockContainer.appendChild(blockElement);
         });
     }
 
-     function validateChain() {
-
+    function validateChain() {
         let i = chain.length - 1;
 
         while (i > 0) {
-            let currentBlock = chain[i]
-            let previousBlock = chain[i - 1]
+            let currentBlock = chain[i];
+            let previousBlock = chain[i - 1];
 
             if (previousBlock.hash !== currentBlock.lastHash) {
                 document.getElementById("validationResult").textContent = 'Blockchain is invalid!';
