@@ -5,6 +5,7 @@ body {
 }
 
 .navbar {
+    position: fixed;
     top: 0;
     width: 100%;
     height: 60px;
@@ -67,4 +68,22 @@ body {
 
 .content ul li {
     margin-bottom: 10px;
+}
+
+.content ul {
+    display: none;
+}
+
+section {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+#section1 {
+    background-color: grey;
+}
+#section2 {
+    background-color: palegreen;
 }

@@ -4,11 +4,6 @@
   <meta charset="UTF-8">
   <title>HUD Example</title>
   <link rel="stylesheet" href="cvStyles.css">
-  <style>
-    .content ul {
-      display: none;
-    }
-  </style>
 </head>
 <body>
 
@@ -23,32 +18,36 @@
   </div>
 </div>
 
-<div class="container">
-
-  <div class="box">
-    <div class="title">
-      Appointment Tool
-    </div>
-    <div class="content">
-      <img src="beeworks.png">
-      <ul>
-        <li>Mitarbeiterportal mit integriertem Bewerbungstool für Bewerbende</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="box">
-    <div class="title">
-      Managementsystem
-    </div>
-    <div class="content">
-      <ul>
-        <li>Web-Applikation zum Anzeigen, Verwalten und Erstellen von Gerichten und Zutaten </li>
-      </ul>
+<section id="section1">
+  <div class="container">
+    <div class="box">
+      <div class="title">
+        Appointment Tool
+      </div>
+      <div class="content">
+        <img src="beeworks.png">
+        <ul>
+          <li>Mitarbeiterportal mit integriertem Bewerbungstool für Bewerbende</li>
+        </ul>
+      </div>
     </div>
   </div>
+</section>
 
-</div>
+<section id="section2">
+  <div class="container">
+    <div class="box">
+      <div class="title">
+        Managementsystem
+      </div>
+      <div class="content">
+        <ul>
+          <li>Web-Applikation zum Anzeigen, Verwalten und Erstellen von Gerichten und Zutaten </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
 <script>
   document.querySelectorAll('.content').forEach(function(content) {
@@ -56,6 +55,17 @@
       const ul = this.querySelector('ul');
       ul.style.display = ul.style.display === 'none' || ul.style.display === '' ? 'block' : 'none';
     });
+  });
+
+  document.addEventListener('scroll', function() {
+    const scrollPosition = window.scrollY + window.innerHeight;
+    const section2Position = document.querySelector('#section2').offsetTop;
+
+    if (scrollPosition >= section2Position) {
+      document.querySelector('#section2').scrollIntoView({ behavior: 'smooth' });
+    } else {
+      document.querySelector('#section1').scrollIntoView({ behavior: 'smooth' });
+    }
   });
 </script>
 
