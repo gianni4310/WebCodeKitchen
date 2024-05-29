@@ -4,14 +4,14 @@ body {
 }
 
 .navbar {
-    background-image: url(background.jpg);
+    /*background-image: url(background.jpg);*/
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     position: fixed;
     top: 0;
     width: 100%;
-    height: 350px;
+    height: 300px;
     background-color: white;
     display: flex;
     justify-content: space-between;
@@ -19,7 +19,6 @@ body {
 }
 
 .nav-item {
-    color: white;
     font-size: 25px;
     cursor: pointer;
     margin: 0 20px;
@@ -71,6 +70,7 @@ section {
 }
 
 #section1 {
+    padding-top: 350px;
     background-color: antiquewhite;
 }
 
@@ -101,4 +101,16 @@ section {
 .logo-img.scrolled {
     align-items: start;
     width: 100px;
+}
+
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 50px;
+    color: black;
+    font-size: 30px;
+    user-select: none;
 }
