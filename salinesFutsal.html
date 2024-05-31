@@ -78,11 +78,24 @@
     function loadImages() {
         const slidesContainer = document.getElementById('slides-container');
         const imagePaths = [
-            'pics/image1',
-            'pics/image2',
-            
-        ]
+            'pics/image1.png',
+            'pics/image2.png',
+        ];
 
+    imagePaths.forEach((path, index) => {
+        const slide = document.createElement('div');
+        slide.classList.add('slide');
+        if( index === 1) {
+            slide.classList.add('active-slide');
+          }
+          const img = document.createElement('img');
+          img.src = path;
+
+          slide.appendChild(img);
+          slidesContainer.appendChild(slide);
+          
+        
+    })
     }
 
 
