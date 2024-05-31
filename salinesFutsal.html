@@ -32,15 +32,9 @@
         <div>
             <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
         </div>
-        <div class="slide active-slide">
-            <p>Test 1</p>
-        </div>
-        <div class="slide">
-            <p>Test 2</p>
-        </div>
-        <div class="slide">
-            <p>Test 3</p>
-        </div>
+
+        <div id="slides-container"></div> 
+
         <div>
             <a class="next" onclick="changeSlide(1)">&#10095;</a>
         </div>
@@ -81,6 +75,17 @@
 <script>
     let currentSlide = 0;
 
+    function loadImages() {
+        const slidesContainer = document.getElementById('slides-container');
+        const imagePaths = [
+            'pics/image1',
+            'pics/image2',
+            
+        ]
+
+    }
+
+
     function changeSlide(direction) {
     showSlide(currentSlide + direction);
 }
@@ -95,13 +100,13 @@ function showSlide(index) {
         currentSlide = index;
     }
 
-  
+    slides.forEach((slide, i) => {
+        slide.classList.remove('active-slide');
+        if (i === currentSlide) {
+            slide.classList.add('active-slide');
+        }
+    });
 }
-
-
-
-showSlide(currentSlide);
-
 
     document.getElementById('nav-section1').addEventListener('click', function() {
         document.getElementById('section1').scrollIntoView({ behavior: 'smooth' });
@@ -130,6 +135,12 @@ showSlide(currentSlide);
         logo.classList.remove('scrolled');
     }
 });
+
+
+showSlide(currentSlide);
+loadImages();
+
+setInterval(() => changeSlide(1), 5000);
 
 </script>
 
