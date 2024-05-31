@@ -114,3 +114,10 @@ section {
     font-size: 30px;
     user-select: none;
 }
+
+.slide {
+    display: none;
+}
+.active-slide {
+    display: block;
+}

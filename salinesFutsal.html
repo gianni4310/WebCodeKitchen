@@ -32,10 +32,15 @@
         <div>
             <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
         </div>
-        <div>
-            test
+        <div class="slide active-slide">
+            <p>Test 1</p>
         </div>
-        
+        <div class="slide">
+            <p>Test 2</p>
+        </div>
+        <div class="slide">
+            <p>Test 3</p>
+        </div>
         <div>
             <a class="next" onclick="changeSlide(1)">&#10095;</a>
         </div>
@@ -74,6 +79,30 @@
 </section>
 
 <script>
+    let currentSlide = 0;
+
+    function changeSlide(direction) {
+    showSlide(currentSlide + direction);
+}
+
+function showSlide(index) {
+    const slides = document.querySelectorAll('.slide');
+    if (index >= slides.length) {
+        currentSlide = 0;
+    } else if (index < 0) {
+        currentSlide = slides.length - 1;
+    } else {
+        currentSlide = index;
+    }
+
+  
+}
+
+
+
+showSlide(currentSlide);
+
+
     document.getElementById('nav-section1').addEventListener('click', function() {
         document.getElementById('section1').scrollIntoView({ behavior: 'smooth' });
     });
